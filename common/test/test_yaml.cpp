@@ -6,6 +6,7 @@
 
 TEST(YAML, yaml_category_read) {
   ParamHandler paramHandler(getConfigDirectoryPath() + "test-yaml.yaml");
+  std::cout << "getConfigDirectoryPath() " << getConfigDirectoryPath() << std::endl;
   EXPECT_TRUE(paramHandler.fileOpenedSuccessfully());
   double c1p1, c2p1;
   std::vector<double> c1p2, c2p2;
