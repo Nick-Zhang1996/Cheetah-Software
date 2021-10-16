@@ -21,6 +21,7 @@
 #include "../FSM_States/FSM_State_Vision.h"
 #include "../FSM_States/FSM_State_BackFlip.h"
 #include "../FSM_States/FSM_State_FrontJump.h"
+#include "../FSM_States/FSM_State_NickJump.h"
 
 /**
  * Enumerate all of the operating modes

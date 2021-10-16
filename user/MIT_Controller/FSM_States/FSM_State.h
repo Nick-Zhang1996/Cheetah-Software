@@ -18,6 +18,7 @@
 #define K_RECOVERY_STAND 6
 #define K_VISION 8
 #define K_BACKFLIP 9
+#define K_NICKJUMP 10
 #define K_FRONTJUMP 11
 
 // Specific control states
@@ -40,6 +41,7 @@ enum class FSM_StateName {
   RECOVERY_STAND,
   VISION,
   BACKFLIP,
+  NICKJUMP,
   FRONTJUMP
 };
 
