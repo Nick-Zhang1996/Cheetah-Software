@@ -52,6 +52,7 @@ ControlFSM<T>::ControlFSM(Quadruped<T>* _quadruped,
   statesList.vision = new FSM_State_Vision<T>(&data);
   statesList.backflip = new FSM_State_BackFlip<T>(&data);
   statesList.frontJump = new FSM_State_FrontJump<T>(&data);
+  statesList.nickJump = new FSM_State_NickJump<T>(&data);
 
   safetyChecker = new SafetyChecker<T>(&data);
 
@@ -272,6 +273,9 @@ FSM_State<T>* ControlFSM<T>::getNextState(FSM_StateName stateName) {
 
     case FSM_StateName::FRONTJUMP:
       return statesList.frontJump;
+
+    case FSM_StateName::NICKJUMP:
+      return statesList.nickJump;
 
     default:
       return statesList.invalid;

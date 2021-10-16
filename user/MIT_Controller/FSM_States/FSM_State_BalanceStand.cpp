@@ -142,6 +142,16 @@ FSM_StateName FSM_State_BalanceStand<T>::checkTransition() {
       this->transitionDuration = 0.;
       break;
 
+    case K_FRONTJUMP:
+      this->nextStateName = FSM_StateName::FRONTJUMP;
+      this->transitionDuration = 0.;
+      break;
+
+    case K_NICKJUMP:
+      this->nextStateName = FSM_StateName::NICKJUMP;
+      this->transitionDuration = 0.;
+      break;
+
     default:
       std::cout << "[CONTROL FSM] Bad Request: Cannot transition from "
                 << K_BALANCE_STAND << " to "

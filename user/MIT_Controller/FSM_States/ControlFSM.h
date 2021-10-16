@@ -45,6 +45,7 @@ struct FSM_StatesList {
   FSM_State_Vision<T>* vision;
   FSM_State_BackFlip<T>* backflip;
   FSM_State_FrontJump<T>* frontJump;
+  FSM_State_NickJump<T>* nickJump;
 };
 
 
