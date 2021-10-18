@@ -1,3 +1,4 @@
+*.swp
 build/
 mc-build/
 cmake-build-debug/

@@ -1,5 +1,7 @@
 #ifndef DATAREAD_CTRL
 #define DATAREAD_CTRL
+// controller that utilizes precalculated control plan
+// for backflip/jump only -N
 
 #include "DataReader.hpp"
 #include <Dynamics/FloatingBaseModel.h>
@@ -35,6 +37,7 @@ class DataReadCtrl {
     pre_mode_count = 0;
   }
 
+  // empty since jump is terminated by contact detection -N
   void LastVisit() {}
 
   bool EndOfPhase(LegControllerData<T>* data) {
