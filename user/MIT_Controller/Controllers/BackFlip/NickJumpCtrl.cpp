@@ -185,7 +185,8 @@ void NickJumpCtrl<T>::_update_joint_command() {
     //q_des_front_f << 0.0, -0.9, 1.8;
     //q_des_front_f << 0.0, -1.0, 2.05;
     //q_des_front_f << 0.0, -0.85, 1.9;
-    q_des_front_f << 0.0, -0.45, 1.3;
+    //q_des_front_f << 0.0, -0.45, 1.3;
+    q_des_front_f << 0.0, 0.0, 0.0;
     
     //q_des_rear_f << 0.0, -0.8, 1.2;
     //q_des_rear_f << 0.0, -0.8, 1.6;
