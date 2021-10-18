@@ -58,7 +58,7 @@ class FSM_State_NickJump : public FSM_State<T> {
   int _count = 0;
   int _waiting_count = 6;
   float _curr_time = 0;
-  FrontJumpCtrl<T>* front_jump_ctrl_;
+  NickJumpCtrl<T>* front_jump_ctrl_;
 
   void SetTestParameter(const std::string& test_file);
   bool _Initialization();

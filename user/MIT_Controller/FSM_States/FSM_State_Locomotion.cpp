@@ -56,7 +56,8 @@ void FSM_State_Locomotion<T>::onEnter() {
   // Reset the transition data
   this->transitionData.zero();
   cMPCOld->initialize();
-  this->_data->_gaitScheduler->gaitData._nextGait = GaitType::TROT;
+  //this->_data->_gaitScheduler->gaitData._nextGait = GaitType::TROT;
+  this->_data->_gaitScheduler->gaitData._nextGait = GaitType::PRONK;
   printf("[FSM LOCOMOTION] On Enter\n");
 }
 

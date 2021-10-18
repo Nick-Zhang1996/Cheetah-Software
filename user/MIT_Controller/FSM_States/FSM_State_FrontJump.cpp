@@ -15,7 +15,7 @@
  */
 template <typename T>
 FSM_State_FrontJump<T>::FSM_State_FrontJump(ControlFSMData<T>* _controlFSMData)
-    : FSM_State<T>(_controlFSMData, FSM_StateName::FRONT_JUMP, "STAND_UP"){
+    : FSM_State<T>(_controlFSMData, FSM_StateName::FRONTJUMP, "STAND_UP"){
   // Do nothing
   // Set the pre controls safety checks
   this->checkSafeOrientation = false;

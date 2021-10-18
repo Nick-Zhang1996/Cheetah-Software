@@ -9,8 +9,8 @@
 template <typename T>
 class NickJumpCtrl : public DataReadCtrl<T> {
  public:
-  FrontJumpCtrl(DataReader*, float _dt);
-  virtual ~FrontJumpCtrl();
+  NickJumpCtrl(DataReader*, float _dt);
+  virtual ~NickJumpCtrl();
 
   virtual void OneStep(float _curr_time, bool b_preparation, LegControllerCommand<T>* command);
 
