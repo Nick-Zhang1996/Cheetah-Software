@@ -186,7 +186,7 @@ void NickJumpCtrl<T>::_update_joint_command() {
     //q_des_front_f << 0.0, -1.0, 2.05;
     //q_des_front_f << 0.0, -0.85, 1.9;
     //q_des_front_f << 0.0, -0.45, 1.3;
-    q_des_front_f << 0.0, 0.0, 0.0;
+    q_des_front_f << 0.0, 0.4, 0.7;
     
     //q_des_rear_f << 0.0, -0.8, 1.2;
     //q_des_rear_f << 0.0, -0.8, 1.6;
@@ -217,12 +217,11 @@ void NickJumpCtrl<T>::_update_joint_command() {
   DataCtrl::_des_jpos[9] = s * (0.2);
 
   if(DataCtrl::current_iteration >= tuck_iteration){
-  DataCtrl::_des_jpos[0] = (-0.2);
-  DataCtrl::_des_jpos[3] = (0.2);
-  DataCtrl::_des_jpos[6] = (-0.2);
-  DataCtrl::_des_jpos[9] = (0.2);
-
-   }
+    DataCtrl::_des_jpos[0] = (-0.2);
+    DataCtrl::_des_jpos[3] = (0.2);
+    DataCtrl::_des_jpos[6] = (-0.2);
+    DataCtrl::_des_jpos[9] = (0.2);
+  }
 
   // Front Hip
   for (int i = 1; i < 6; i += 3) {
