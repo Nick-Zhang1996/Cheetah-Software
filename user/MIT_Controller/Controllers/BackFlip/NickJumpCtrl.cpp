@@ -42,11 +42,13 @@ void NickJumpCtrl<T>::_update_joint_command() {
   DataCtrl::_des_jvel.setZero();
   DataCtrl::_jtorque.setZero();
 
+  // original 
+  //DataCtrl::_Kp_joint={10.0, 10.0, 10.0};
+  //DataCtrl::_Kd_joint={1.0, 1.0, 1.0};
+
   DataCtrl::_Kp_joint={10.0, 10.0, 10.0};
   DataCtrl::_Kd_joint={1.0, 1.0, 1.0};
 
-  //DataCtrl::_Kp_joint={20.0, 20.0, 20.0};
-  //DataCtrl::_Kd_joint={3.0, 3.0, 3.0};
 
 
   // PRE JUMP PREPATATION - CROUCH (FOLLOWS PREMODE DURATION TIMESTEPS) 
@@ -166,6 +168,11 @@ void NickJumpCtrl<T>::_update_joint_command() {
 
     if (s > 1) {
       s = 1;
+      DataCtrl::_Kp_joint={20.0, 20.0, 20.0};
+      DataCtrl::_Kd_joint={2.0, 2.0, 2.0};
+    } else {
+      DataCtrl::_Kp_joint={20.0, 20.0, 20.0};
+      DataCtrl::_Kd_joint={2.0, 2.0, 2.0};
     }
     Vec3<float> q_des_front_0;
     Vec3<float> q_des_rear_0;
@@ -200,8 +207,8 @@ void NickJumpCtrl<T>::_update_joint_command() {
     q_des_front = (1 - s) * q_des_front_0 + s * q_des_front_f;
     q_des_rear = (1 - s) * q_des_rear_0 + s * q_des_rear_f;
 
-    DataCtrl::_Kp_joint={20.0, 20.0, 20.0};
-    DataCtrl::_Kd_joint={2.0, 2.0, 2.0};
+    //DataCtrl::_Kp_joint={20.0, 20.0, 20.0};
+    //DataCtrl::_Kd_joint={2.0, 2.0, 2.0};
   }
 
   

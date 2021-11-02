@@ -16,6 +16,9 @@ class BackFlipCtrl : public DataReadCtrl<T> {
 
  protected:
   void _update_joint_command();
+ private:
+  bool ramp_to_tuck_printed;
+  bool finish_tuck_printed;
 
 };
 

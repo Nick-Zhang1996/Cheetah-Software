@@ -2,7 +2,9 @@
 
 
 template <typename T>
-BackFlipCtrl<T>::BackFlipCtrl(DataReader* data_reader,float _dt) : DataReadCtrl<T>(data_reader, _dt) {}
+BackFlipCtrl<T>::BackFlipCtrl(DataReader* data_reader,float _dt) : DataReadCtrl<T>(data_reader, _dt),
+ramp_to_tuck_printed(false),
+finish_tuck_printed(false) {}
 
 
 template <typename T>
@@ -82,7 +84,9 @@ void BackFlipCtrl<T>::_update_joint_command() {
   //pretty_print(tau_rear, std::cout, "tau rear");
   float s(0.);
 
+
   if (DataCtrl::current_iteration >= tuck_iteration) {  // ramp to landing configuration
+    if (!ramp_to_tuck_printed) {printf("ramping to landing configuration \n"); ramp_to_tuck_printed = true;}
     qd_des_front << 0.0, 0.0, 0.0;
     qd_des_rear << 0.0, 0.0, 0.0;
     tau_front << 0.0, 0.0, 0.0;
@@ -91,6 +95,7 @@ void BackFlipCtrl<T>::_update_joint_command() {
     s = (float)(DataCtrl::current_iteration - tuck_iteration) /
       (ramp_end_iteration - tuck_iteration);
 
+    // plateau after ramp
     if (s > 1) {
       s = 1;
     }
@@ -123,6 +128,7 @@ void BackFlipCtrl<T>::_update_joint_command() {
 
   }
 
+  // setting joint toruqes
   // Abduction
   for (int i = 0; i < 12; i += 3) {
     DataCtrl::_des_jpos[i] = 0.0;

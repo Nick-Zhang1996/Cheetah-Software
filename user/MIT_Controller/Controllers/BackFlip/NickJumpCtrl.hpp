@@ -1,6 +1,7 @@
 #ifndef NICKJUMP_CTRL
 #define NICKJUMP_CTRL
 
+#include <cmath>
 #include "DataReader.hpp"
 #include "DataReadCtrl.hpp"
 #include <Dynamics/FloatingBaseModel.h>

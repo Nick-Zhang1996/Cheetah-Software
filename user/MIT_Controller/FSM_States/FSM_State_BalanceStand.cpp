@@ -197,6 +197,10 @@ TransitionData<T> FSM_State_BalanceStand<T>::transition() {
       this->transitionData.done = true;
       break;
 
+    case FSM_StateName::NICKJUMP:
+      this->transitionData.done = true;
+      break;
+
     case FSM_StateName::VISION:
       this->transitionData.done = true;
       break;

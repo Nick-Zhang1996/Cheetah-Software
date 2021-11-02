@@ -40,13 +40,24 @@ class DataReadCtrl {
   // empty since jump is terminated by contact detection -N
   void LastVisit() {}
 
+  // check end of phase
   bool EndOfPhase(LegControllerData<T>* data) {
+    /*
+    printf("leg qdot @ %.2f: ", _state_machine_time);
+    for (int leg(0); leg < 4; ++leg) {
+        printf("%d: %.2f, ", leg, data[leg].qd[1]);
+    }
+    printf("\n");
+    */
+    printf("[DataReadCtrl] SM time %.2f \n", _state_machine_time);
+
     if (_state_machine_time > (_end_time - 2. * dt)) {
+      //printf("[DataReadCtrl] SM time %.2f, end time %.2f \n", _state_machine_time, _end_time);
+      //printf("[DataReadCtrl] Leaving state, time ended \n");
       return true;
     }
     for (int leg(0); leg < 4; ++leg) {
-      if(_state_machine_time>2.7 && data[leg].q[1] > 
-          _q_knee_max && data[leg].qd[1] > _qdot_knee_max){
+      if(_state_machine_time>1.55 && ( std::abs(data[leg].qd[1]) > _qdot_knee_max)){
         printf("Contact detected at leg [%d] => Switch to the landing phase !!! \n", leg); 
         printf("state_machine_time: %lf \n",_state_machine_time); 
         printf("Q-Knee: %lf \n",data[leg].q[1]);
@@ -87,8 +98,11 @@ class DataReadCtrl {
   int _dim_contact;
 
   T _ctrl_start_time;
+  // original
+  //T _q_knee_max = 2.0;
+  //T _qdot_knee_max = 2.0;
   T _q_knee_max = 2.0;
-  T _qdot_knee_max = 2.0;
+  T _qdot_knee_max = 9.0;
 
   T _state_machine_time;
 
