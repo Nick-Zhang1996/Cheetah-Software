@@ -116,6 +116,8 @@ void FSM_State_NickJump<T>::ComputeCommand() {
 
   if (front_jump_ctrl_->EndOfPhase(this->_data->_legController->datas)) {
     front_jump_ctrl_->LastVisit();
+    this->_data->controlParameters->control_mode = K_RECOVERY_STAND;
+    printf("[NickJump] switching to recoveryStand");
   }
 }
 
