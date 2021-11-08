@@ -11,17 +11,22 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/ioctl.h>
 
 #define termios asmtermios
+#define termio asmtermio
+#define winsize asmwinsize
 
 #include <asm/termios.h>
 
 #undef termios
+#undef termio
+#undef winsize
 
 #include <termios.h>
 #include <math.h>
 #include <pthread.h>
-#include <stropts.h>
+//#include <stropts.h>
 #include <endian.h>
 #include <stdint.h>
 
