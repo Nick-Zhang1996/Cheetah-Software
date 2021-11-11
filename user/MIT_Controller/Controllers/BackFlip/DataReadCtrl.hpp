@@ -49,7 +49,7 @@ class DataReadCtrl {
     }
     printf("\n");
     */
-    printf("[DataReadCtrl] SM time %.2f \n", _state_machine_time);
+    //printf("[DataReadCtrl] SM time %.2f \n", _state_machine_time);
 
     if (_state_machine_time > (_end_time - 2. * dt)) {
       //printf("[DataReadCtrl] SM time %.2f, end time %.2f \n", _state_machine_time, _end_time);
@@ -102,6 +102,7 @@ class DataReadCtrl {
   //T _q_knee_max = 2.0;
   //T _qdot_knee_max = 2.0;
   T _q_knee_max = 2.0;
+  // FIXME TODO reduce this, add checking for time
   T _qdot_knee_max = 9.0;
 
   T _state_machine_time;

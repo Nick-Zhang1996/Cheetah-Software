@@ -1,8 +1,11 @@
 #include "NickJumpCtrl.hpp"
 
-
 template <typename T>
-NickJumpCtrl<T>::NickJumpCtrl(DataReader* data_reader,float _dt) : DataReadCtrl<T>(data_reader, _dt) {}
+NickJumpCtrl<T>::NickJumpCtrl(DataReader* data_reader,float _dt) : 
+  DataReadCtrl<T>(data_reader, _dt),
+  _contact_leg_count(0),
+  _ready_for_landing(false)
+{}
 
 
 template <typename T>
@@ -13,7 +16,16 @@ void NickJumpCtrl<T>::OneStep(float _curr_time, bool b_preparation, LegControlle
   DataCtrl::_state_machine_time = _curr_time - DataCtrl::_ctrl_start_time;
 
   DataCtrl::_b_Preparation = b_preparation;
-  _update_joint_command();
+  if(!_ready_for_landing && _update_joint_command()){
+    printf("plan finished\n");
+    _ready_for_landing = true;
+  }
+
+  // when partial leg contact, make contact legs damper
+  if (_contact_leg_count > 0 && _contact_leg_count < 4){
+    _make_contact_leg_damper();
+  }
+
 
   for (int leg = 0; leg < 4; ++leg) {
     for (int jidx = 0; jidx < 3; ++jidx) {
@@ -27,7 +39,34 @@ void NickJumpCtrl<T>::OneStep(float _curr_time, bool b_preparation, LegControlle
 }
 
 template <typename T>
-void NickJumpCtrl<T>::_update_joint_command() {
+bool NickJumpCtrl<T>::EndOfPhase(LegControllerData<T>* data){
+  if (!_ready_for_landing) { return false;}
+  _check_leg_contact(data);
+  if (_contact_leg_count == 4){
+    printf("all legs made contact, switching");
+    return true;
+  } 
+  return false;
+}
+
+template <typename T>
+void NickJumpCtrl<T>::_check_leg_contact(LegControllerData<T>* data) {
+  _contact_leg_count = 0;
+  for (int leg(0); leg<4; leg++){
+    if(!_leg_contact[leg] && std::abs(data[leg].qd[1]) > DataCtrl::_qdot_knee_max){
+      printf("Contact detected at leg [%d] \n", leg); 
+      _leg_contact[leg] = true;
+    }
+    _contact_leg_count += _leg_contact[leg]?1:0;
+  }
+}
+
+template <typename T>
+void NickJumpCtrl<T>::_make_contact_leg_damper() {
+}
+
+template <typename T>
+int NickJumpCtrl<T>::_update_joint_command() {
   int pre_mode_duration(700);
   int leg_clearance_iteration_front(240) ; 
   //int leg_clearance_iteration_front(180) ; 
@@ -35,16 +74,15 @@ void NickJumpCtrl<T>::_update_joint_command() {
   int leg_ramp_iteration(610);
   int tuck_iteration(610);
   int ramp_end_iteration(700);
+  // 0: in progress
+  // 1: plan finished, in air tuck complete, switch to landing preparation now
+  int retval(0);
 
   float tau_mult;
 
   DataCtrl::_des_jpos.setZero();
   DataCtrl::_des_jvel.setZero();
   DataCtrl::_jtorque.setZero();
-
-  // original 
-  //DataCtrl::_Kp_joint={10.0, 10.0, 10.0};
-  //DataCtrl::_Kd_joint={1.0, 1.0, 1.0};
 
   DataCtrl::_Kp_joint={10.0, 10.0, 10.0};
   DataCtrl::_Kd_joint={1.0, 1.0, 1.0};
@@ -168,6 +206,7 @@ void NickJumpCtrl<T>::_update_joint_command() {
 
     if (s > 1) {
       s = 1;
+      retval = 1;
       DataCtrl::_Kp_joint={20.0, 20.0, 20.0};
       DataCtrl::_Kd_joint={2.0, 2.0, 2.0};
     } else {
@@ -260,6 +299,7 @@ void NickJumpCtrl<T>::_update_joint_command() {
 
   // Update rate 0.5kHz
   DataCtrl::current_iteration += DataCtrl::_key_pt_step;
+  return retval;
 }
 
 
